@@ -91,3 +91,31 @@ table, td, th {
 [role="tabpanel"] {
   background: black;
 }
+
+/* Light Switch Styles */
+[role="switch"] {
+  border: 0 solid #005a9c;
+}
+
+[role="switch"] .switch {
+  border: 2px solid white;
+}
+
+[role="switch"] .switch span {
+  border: 2px solid white;
+  background: white;
+}
+
+[role="switch"][aria-checked="true"] .switch span {
+  background: yellow;
+  border-color: yellow;
+}
+
+[role="switch"]:focus,
+[role="switch"]:hover {
+  background-color: black;
+}
+
+[role="switch"]:focus span.switch {
+  background-color: black;
+}

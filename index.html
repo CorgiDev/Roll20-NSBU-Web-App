@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
     <head>
         <title>NSBU Tracker</title>
         <meta charset="utf-8">
@@ -7,14 +7,24 @@
         <link rel="stylesheet" type="text/css" href="styles/normalize.css">
         <link rel="stylesheet" type="text/css" href="styles/main.css">
         <link rel="stylesheet" type="text/css" href="styles/tablist.css">
-        <!-- <link rel="stylesheet" type="text/css" href="styles/light.css"> -->
-        <link rel="stylesheet" type="text/css" href="styles/dark.css">
+        <link rel="stylesheet" type="text/css" href="styles/lightSwitch.css">
+        <link rel="stylesheet" type="text/css" id="lightSwitch" href="styles/light.css">
         <!-- <link rel="stylesheet" type="text/css" href="styles/responsive.css"> -->
         <script src="scripts/troubleshootButtons.js"></script>
     </head>
     <body onload="resetCopyText()">
         <main>
-            <h1>Never Stop Blowing Up (NSBU) Tracker</h1>
+            <div id="mainHeading">
+                <div><h1>Never Stop Blowing Up (NSBU) Tracker</h1></div>
+                <div id="darkModeToggle" role="switch" aria-checked="false" tabindex="0">
+                    <span class="label">Dark Mode</span>
+                    <span class="switch">
+                        <span></span>
+                    </span>
+                    <span class="on" aria-hidden="true">On</span>
+                    <span class="off" aria-hidden="true">Off</span>
+                </div>
+            </div>
 
             <h2>Basic Character Information</h2>
             <div>
@@ -64,7 +74,7 @@
                             <option value="100">d100</option>
                         </select>
                         <div class="rollDiv"><input type="button" id="stuntsButton1" value="Roll Stunts Here" class="rollStat" onclick="RollSkill(stuntsDie.value, stuntsResult.id)"></div>
-                        <p role="status">Stunts Roll Result: <span id="stuntsResult">Not yet rolled</span></p>
+                        <p role="status"><div class="label">Stunts Roll Result</div>: <span id="stuntsResult">Not yet rolled</span></p>
                         <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
                         <div>
                             <code id="stuntsCode">
@@ -86,7 +96,7 @@
                             <option value="100">d100</option>
                         </select>
                         <div class="rollDiv"><input type="button" id="brawlButton1" value="Roll Brawl Here" class="rollStat" onclick="RollSkill(brawlDie.value, brawlResult.id)"></div>
-                        <p role="status">Brawl Roll Result: <span id="brawlResult">Not yet rolled</span></p>
+                        <p role="status"><div class="label">Brawl Roll Result</div>: <span id="brawlResult">Not yet rolled</span></p>
                         <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
                         <div>
                             <code id="brawlCode">
@@ -108,7 +118,7 @@
                             <option value="100">d100</option>
                         </select>
                         <div class="rollDiv"><input type="button" id="toughButton1" value="Roll Tough Here" class="rollStat" onclick="RollSkill(toughDie.value, toughResult.id)"></div>
-                        <p role="status">Tough Roll Result: <span id="toughResult">Not yet rolled</span></p>
+                        <p role="status"><div class="label">Tough Roll Result</div>: <span id="toughResult">Not yet rolled</span></p>
                         <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
                         <div>
                             <code id="toughCode">
@@ -130,7 +140,7 @@
                             <option value="100">d100</option>
                         </select>
                         <div class="rollDiv"><input type="button" id="techButton1" value="Roll Tech Here" class="rollStat" onclick="RollSkill(techDie.value, techResult.id)"></div>
-                        <p role="status">Tech Roll Result: <span id="techResult">Not yet rolled</span></p>
+                        <p role="status"><div class="label">Tech Roll Result</div>: <span id="techResult">Not yet rolled</span></p>
                         <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
                         <div>
                             <code id="techCode">
@@ -152,7 +162,7 @@
                             <option value="100">d100</option>
                         </select>
                         <div class="rollDiv"><input type="button" id="weaponsButton1" value="Roll Weapons Here" class="rollStat" onclick="RollSkill(weaponsDie.value, weaponsResult.id)"></div>
-                        <p role="status">Weapons Roll Result: <span id="weaponsResult">Not yet rolled</span></p>
+                        <p role="status"><div class="label">Weapons Roll Result</div>: <span id="weaponsResult">Not yet rolled</span></p>
                         <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
                         <div>
                             <code id="weaponsCode">
@@ -174,7 +184,7 @@
                             <option value="100">d100</option>
                         </select>
                         <div class="rollDiv"><input type="button" id="driveButton1" value="Roll Drive Here" class="rollStat" onclick="RollSkill(driveDie.value, driveResult.id)"></div>
-                        <p role="status">Drive Roll Result: <span id="driveResult">Not yet rolled</span></p>
+                        <p role="status"><div class="label">Drive Roll Result</div>: <span id="driveResult">Not yet rolled</span></p>
                         <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
                         <div>
                             <code id="driveCode">
@@ -196,7 +206,7 @@
                             <option value="100">d100</option>
                         </select>
                         <div class="rollDiv"><input type="button" id="sneakButton1" value="Roll Sneak Here" class="rollStat" onclick="RollSkill(sneakDie.value, sneakResult.id)"></div>
-                        <p role="status">Sneak Roll Result: <span id="sneakResult">Not yet rolled</span></p>
+                        <p role="status"><div class="label">Sneak Roll Result</div>: <span id="sneakResult">Not yet rolled</span></p>
                         <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
                         <div>
                             <code id="sneakCode">
@@ -218,7 +228,7 @@
                             <option value="100">d100</option>
                         </select>
                         <div class="rollDiv"><input type="button" id="witsButton1" value="Roll Wits Here" class="rollStat" onclick="RollSkill(witsDie.value, witsResult.id)"></div>
-                        <p role="status">Wits Roll Result: <span id="witsResult">Not yet rolled</span></p>
+                        <p role="status"><div class="label">Wits Roll Result</div>: <span id="witsResult">Not yet rolled</span></p>
                         <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
                         <div>
                             <code id="witsCode">
@@ -240,7 +250,7 @@
                             <option value="100">d100</option>
                         </select>
                         <div class="rollDiv"><input type="button" id="hotButton1" value="Roll Hot Here" class="rollStat" onclick="RollSkill(hotDie.value, hotResult.id)"></div>
-                        <p role="status">Hot Roll Result: <span id="hotResult">Not yet rolled</span></p>
+                        <p role="status"><div class="label">Hot Roll Result</div>: <span id="hotResult">Not yet rolled</span></p>
                         <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
                         <div>
                             <code id="hotCode">
@@ -756,10 +766,6 @@
                     <p>This button is used to import a character's information into this web app using a JSON file created previously.</p>
                     <input type="button" id="importButton" type="button" aria-label="Import Character Information" value="Import Character Information" onclick="importCharacter();">
 
-                    <h3>Dark Mode Toggle</h3>
-                    <p>This button is intended to be used to toggle between light and dark mode.</p>
-                    <input type="button" id="darkModeToggle" disabled type="button" data-theme-toggle aria-label="Change to light Mode" value="Change to light Mode" onclick="toggleTheme();">
-
                     <h3>Troubleshooting</h3>
                     <p>Button in this section are intended to be used to fix known issues that may occur.</p>
                     <input type="button" id="resetCopyText" type="button" aria-label="Reset Copy Text" value="Reset Copy Text" onclick="resetCopyText();">
@@ -773,5 +779,6 @@
         <script src="scripts/skills.js"></script>
         <script src="scripts/characterActions.js"></script>
         <script src="scripts/cookies.js"></script>
+        <script src="scripts/lightSwitch.js"></script>
     </body>
 </html>

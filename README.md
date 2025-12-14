@@ -85,5 +85,6 @@ The following resources are for me to reference as I work on building out this e
 - https://www.freecodecamp.org/news/building-chrome-extension/
 - https://www.w3schools.com/css/css3_mediaqueries_ex.asp
 - https://www.w3schools.com/css/css3_flexbox_container.asp
-- Resources for adding a dark mode:
+- Resources for adding a dark mode and toggle:
   - https://stackoverflow.com/questions/19844545/replacing-css-file-on-the-fly-and-apply-the-new-style-to-the-page
+  - https://www.w3.org/WAI/ARIA/apg/patterns/switch/examples/switch/

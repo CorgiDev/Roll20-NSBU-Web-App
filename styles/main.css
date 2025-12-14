@@ -1,11 +1,11 @@
 /* General Styling */
+#mainHeading {
+    display: flex;
+    justify-content: space-between;
+}
 
 main {
     width: 97%;
-}
-
-label {
-    font-weight:bold;
 }
 
 li {
@@ -22,15 +22,16 @@ p span {
     padding: 5px;
 }
 
-label {
+label, .label {
     margin: 5px;
+    font-weight:bold;
 }
 
 code {
     display: block;
     min-height: 10px;
     min-width: 50px;
-    padding: 20px 20px 20px 20px;
+    padding: 10px;
     margin: 10px 10px 10px 2px;
 }
 
@@ -43,8 +44,8 @@ input[type="button"] {
     padding: 5px;
 }
 
-select, input[type="text"] {
-    padding: 5px;
+select, input[type="text"],input[type="number"],textarea {
+    padding: 3px;
 }
 
 .rollDiv {
