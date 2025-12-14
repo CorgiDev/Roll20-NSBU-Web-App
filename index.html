@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
     <head>
         <title>NSBU Tracker</title>
         <meta charset="utf-8">
@@ -7,13 +7,22 @@
         <link rel="stylesheet" type="text/css" href="styles/normalize.css">
         <link rel="stylesheet" type="text/css" href="styles/main.css">
         <link rel="stylesheet" type="text/css" href="styles/tablist.css">
-        <!-- <link rel="stylesheet" type="text/css" href="styles/light.css"> -->
-        <link rel="stylesheet" type="text/css" href="styles/dark.css">
+        <link rel="stylesheet" type="text/css" href="styles/lightSwitch.css">
+        <link rel="stylesheet" type="text/css" id="lightSwitch" href="styles/light.css">
         <!-- <link rel="stylesheet" type="text/css" href="styles/responsive.css"> -->
         <script src="scripts/troubleshootButtons.js"></script>
     </head>
     <body onload="resetCopyText()">
         <main>
+            <div role="switch" aria-checked="false" tabindex="0">
+                <span class="label">Dark Mode</span>
+                <span class="switch">
+                    <span></span>
+                </span>
+                <span class="on" aria-hidden="true">On</span>
+                <span class="off" aria-hidden="true">Off</span>
+            </div>
+
             <h1>Never Stop Blowing Up (NSBU) Tracker</h1>
 
             <h2>Basic Character Information</h2>
@@ -773,5 +782,6 @@
         <script src="scripts/skills.js"></script>
         <script src="scripts/characterActions.js"></script>
         <script src="scripts/cookies.js"></script>
+        <script src="scripts/lightSwitch.js"></script>
     </body>
 </html>
