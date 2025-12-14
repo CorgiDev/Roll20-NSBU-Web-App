@@ -57,4 +57,28 @@ window.addEventListener('load', function () {
     (element) => new Switch(element)
   );
 });
+
 // Add event listener to the light switch to change themes
+const darkModeToggle = document.getElementById('darkModeToggle');
+const lightSwitchLink = document.getElementById('lightSwitch');
+
+if (darkModeToggle && lightSwitchLink) {
+    // Create a MutationObserver to watch for attribute changes
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'aria-checked') {
+                const isChecked = darkModeToggle.getAttribute('aria-checked') === 'true';
+                
+                // Update the stylesheet href based on the switch state
+                if (isChecked) {
+                    lightSwitchLink.setAttribute('href', 'styles/dark.css');
+                } else {
+                    lightSwitchLink.setAttribute('href', 'styles/light.css');
+                }
+            }
+        });
+    });
+
+    // Start observing the darkModeToggle for attribute changes
+    observer.observe(darkModeToggle, { attributes: true });
+}
