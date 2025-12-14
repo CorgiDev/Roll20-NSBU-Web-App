@@ -65,6 +65,31 @@ table, td, th {
 }
 
 /* Light Switch Styles */
+[role="switch"] {
+  border: 0 solid #005a9c;
+}
 
+[role="switch"] .switch {
+  border: 2px solid black;
+}
+
+[role="switch"] .switch span {
+  border: 2px solid black;
+  background: black;
+}
+
+[role="switch"][aria-checked="true"] .switch span {
+  background: green;
+  border-color: green;
+}
+
+[role="switch"]:focus,
+[role="switch"]:hover {
+  background-color: #def;
+}
+
+[role="switch"]:focus span.switch {
+  background-color: white;
+}
   
 /* Footer Styles */
