@@ -8,6 +8,7 @@
 
 [role="switch"] .label {
   display: inline-block;
+  font-weight: bold;
   width: 8em;
 }
 
@@ -32,7 +33,7 @@
 
 [role="switch"][aria-checked="true"] .switch span {
   left: 21px;
-}
+} 
 
 [role="switch"] .on {
   display: none;
