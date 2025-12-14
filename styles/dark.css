@@ -1,0 +1,93 @@
+/* General Styling */
+* {
+    background: black;
+    color: #00ff26
+}
+
+select {
+    border: 1px solid #00ff26;
+}
+
+input {
+    border: 1px solid #00ff26;
+}
+
+input:hover, input:focus {
+    border: 3px solid #00ff26;
+    font-weight: bold;
+}
+
+/* input[type="text"],input[type="number"] {
+    background: #00ff26;
+    color: black;
+} */
+
+p span {
+    border-bottom: 1px solid #00ff26;
+}
+
+code {
+    border: 4px solid #00ff26;
+}
+
+/* Skills Styles */
+  
+#skillRollers section {
+    border: double #00ff26 4px;
+}
+
+table, td, th {
+    border: 1px solid #00ff26;
+}
+
+[type="button"] {
+    background: #00ff26;
+    color: black;
+}
+
+/* Tabpanel Formatting */
+[role="tabpanel"] {
+    border: 2px solid #00ff26;
+    background: #00ff26;
+}
+
+[role="tab"]:hover span.focus,
+[role="tab"]:focus span.focus,
+[role="tab"]:active span.focus {
+  border: 2px solid #b7ff00;
+}
+
+[role="tab"][aria-selected="false"] {
+    border-bottom: 1px solid #00ff26;
+}
+
+[role="tab"][aria-selected="true"] {
+    border-top-color: #b7ff00;
+    border-bottom-color: #00ff26;
+    background: #00ff26;
+}
+
+[role="tab"],
+[role="tab"]:focus,
+[role="tab"]:hover {
+  border: 1px solid hsl(219deg 1% 72%);
+  border-bottom: 2px solid #00ff26;
+  background: #00ff26;
+}
+
+/* Ability Table */
+  
+/* Footer Styles */
+
+/* Tablist darkmode */
+[role="tab"][aria-selected="true"] {
+    border-bottom-color: #00ff26;
+    background: black;
+}
+
+[role="tab"],
+[role="tab"]:focus,
+[role="tab"]:hover,
+[role="tabpanel"] {
+  background: black;
+}

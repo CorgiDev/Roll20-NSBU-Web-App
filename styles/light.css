@@ -1,0 +1,67 @@
+/* General Styling */
+body {
+    color: #563001;
+}
+
+code {
+    border: 4px solid #563001;
+}
+
+input:hover, input:focus {
+    border: 3px solid black;
+    font-weight: bold;
+}
+
+p span {
+    border-bottom: 1px solid black;
+}
+
+/* Tabpanel Formatting */
+[role="tabpanel"] {
+    border: 2px solid #b7b7b8;
+    background: #fbfcfe;
+}
+
+[role="tab"]:hover span.focus,
+[role="tab"]:focus span.focus,
+[role="tab"]:active span.focus {
+  border: 2px solid #2474d6;
+}
+
+[role="tab"][aria-selected="false"] {
+    border-bottom: 1px solid #b7b7b8;
+}
+
+[role="tab"][aria-selected="true"] {
+    border-top-color: #2474d6;
+    border-bottom-color: #fbfcfe;
+    background: #fbfcfe;
+    color: #563001;
+}
+
+[role="tab"],
+[role="tab"]:focus,
+[role="tab"]:hover {
+  border: 1px solid #b7b7b8;
+  border-bottom: 2px solid #b7b7b8;
+  background: #edeff3;
+  color: #563001;
+}
+
+/* Skills */
+#skillRollers section {
+    border: double #563001 4px;
+}
+
+[type="button"] {
+    background: #563001;
+    color: white;
+}
+
+/* Ability Table */
+
+table, td, th {
+    border: 1px solid #563001;
+}
+  
+/* Footer Styles */

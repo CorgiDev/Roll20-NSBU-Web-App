@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+    <head>
+        <title>NSBU Tracker</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="styles/normalize.css">
+        <link rel="stylesheet" type="text/css" href="styles/main.css">
+        <link rel="stylesheet" type="text/css" href="styles/tablist.css">
+        <!-- <link rel="stylesheet" type="text/css" href="styles/light.css"> -->
+        <link rel="stylesheet" type="text/css" href="styles/dark.css">
+        <!-- <link rel="stylesheet" type="text/css" href="styles/responsive.css"> -->
+        <script src="scripts/troubleshootButtons.js"></script>
+    </head>
+    <body onload="resetCopyText()">
+        <main>
+            <h1>Never Stop Blowing Up (NSBU) Tracker</h1>
+
+            <h2>Basic Character Information</h2>
+            <div>
+                <ul>
+                    <li><label for="heroName">Action Hero Name:</label><input type="text" id="heroName"></li>
+                    <li><label for="heroCatchphrase">Catchphrase:</label><input type="text" id="heroCatchphrase"></li>
+                    <li><label for="turboTokens">Turbo Tokens:</label><input type="number" id="turboTokens" value="2" min="0" max="9999" step="1" aria-label="Turbo Tokens" title="Turbo Tokens"></li>
+                    <li><label for="item-list">Items:</label><br><textarea id="item-list" name="item-list" rows="4" cols="50"></textarea></li>
+                    <li><label for="other-notes">Other Notes:</label><br><textarea id="other-notes" name="other-notes" rows="4" cols="50"></textarea></li>
+                </ul>
+            </div>
+
+            <!-- Tabs for skills, abilities, and more -->
+            <div role="tablist" aria-labelledby="tablist-1" class="manual">
+                <button id="tab-1" type="button" role="tab" aria-selected="true" aria-controls="tabpanel-1">
+                    <span class="focus">Skills</span>
+                </button>
+                <button id="tab-2" type="button" role="tab" aria-selected="false" aria-controls="tabpanel-2" tabindex="-1">
+                    <span class="focus">Injuries</span>
+                </button>
+                <button id="tab-3" type="button" role="tab" aria-selected="false" aria-controls="tabpanel-3" tabindex="-1">
+                    <span class="focus">Abilities</span>
+                </button>
+                <button id="tab-4" type="button" role="tab" aria-selected="false" aria-controls="tabpanel-4" tabindex="-1">
+                    <span class="focus">Group Suites</span>
+                </button>
+                <button id="tab-5" type="button" role="tab" aria-selected="false" aria-controls="tabpanel-5" tabindex="-1">
+                    <span class="focus">Settings</span>
+                </button>
+            </div>
+            
+            <!-- Tabs Content -->
+            <div id="tabpanel-1" role="tabpanel" aria-labelledby="tab-1">
+                <h2>Skills</h2>
+                <p>When an Action Hero wants to do something totally sick, the GM tells them which of the 9 key skills to roll from.</p>
+                <div id="skillRollers">
+                    <section id="stuntsSection" class="skillSection">
+                        <h3 id="stuntsHeading">Stunts</h3>
+                        <select aria-label="Stunts Die Value" name="stuntsDie" id="stuntsDie" onchange="UpdateCopyText(stuntsHeading.textContent, stuntsDie.value, stuntsCode.id)">
+                            <option value="0">--Set Stunts Die Value--</option>
+                            <option value="4">d4</option>
+                            <option value="6">d6</option>
+                            <option value="8">d8</option>
+                            <option value="10">d10</option>
+                            <option value="12">d12</option>
+                            <option value="20">d20</option>
+                            <option value="100">d100</option>
+                        </select>
+                        <div class="rollDiv"><input type="button" id="stuntsButton1" value="Roll Stunts Here" class="rollStat" onclick="RollSkill(stuntsDie.value, stuntsResult.id)"></div>
+                        <p role="status">Stunts Roll Result: <span id="stuntsResult">Not yet rolled</span></p>
+                        <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
+                        <div>
+                            <code id="stuntsCode">
+                                No stunts die set.
+                            </code>
+                            <input type="button" value="Copy Stunts Roll20 Text" onclick="CopyToClipboard(stuntsCode.id)">
+                        </div>
+                    </section>
+                    <section id="brawlSection" class="skillSection">
+                        <h3 id="brawlHeading">Brawl / Fight</h3>
+                        <select aria-label="Brawl Die Value" name="brawlDie" id="brawlDie" onchange="UpdateCopyText(brawlHeading.textContent, brawlDie.value, brawlCode.id)">
+                            <option value="0">--Set Brawl Die Value--</option>
+                            <option value="4">d4</option>
+                            <option value="6">d6</option>
+                            <option value="8">d8</option>
+                            <option value="10">d10</option>
+                            <option value="12">d12</option>
+                            <option value="20">d20</option>
+                            <option value="100">d100</option>
+                        </select>
+                        <div class="rollDiv"><input type="button" id="brawlButton1" value="Roll Brawl Here" class="rollStat" onclick="RollSkill(brawlDie.value, brawlResult.id)"></div>
+                        <p role="status">Brawl Roll Result: <span id="brawlResult">Not yet rolled</span></p>
+                        <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
+                        <div>
+                            <code id="brawlCode">
+                                No Brawl die set.
+                            </code>
+                            <input type="button" value="Copy Brawl Roll20 Text" onclick="CopyToClipboard(brawlCode.id)">
+                        </div>
+                    </section>
+                    <section id="toughSection" class="skillSection">
+                        <h3 id="toughHeading">Tough</h3>
+                        <select aria-label="Tough Die Value" name="toughDie" id="toughDie" onchange="UpdateCopyText(toughHeading.textContent, toughDie.value, toughCode.id)">
+                            <option value="0">--Set Tough Die Value--</option>
+                            <option value="4">d4</option>
+                            <option value="6">d6</option>
+                            <option value="8">d8</option>
+                            <option value="10">d10</option>
+                            <option value="12">d12</option>
+                            <option value="20">d20</option>
+                            <option value="100">d100</option>
+                        </select>
+                        <div class="rollDiv"><input type="button" id="toughButton1" value="Roll Tough Here" class="rollStat" onclick="RollSkill(toughDie.value, toughResult.id)"></div>
+                        <p role="status">Tough Roll Result: <span id="toughResult">Not yet rolled</span></p>
+                        <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
+                        <div>
+                            <code id="toughCode">
+                                No Tough die set.
+                            </code>
+                            <input type="button" value="Copy Tough Roll20 Text" onclick="CopyToClipboard(toughCode.id)">
+                        </div>
+                    </section>
+                    <section id="techSection" class="skillSection">
+                        <h3 id="techHeading">Tech</h3>
+                        <select aria-label="Tech Die Value" name="techDie" id="techDie" onchange="UpdateCopyText(techHeading.textContent, techDie.value, techCode.id)">
+                            <option value="0">--Set Tech Die Value--</option>
+                            <option value="4">d4</option>
+                            <option value="6">d6</option>
+                            <option value="8">d8</option>
+                            <option value="10">d10</option>
+                            <option value="12">d12</option>
+                            <option value="20">d20</option>
+                            <option value="100">d100</option>
+                        </select>
+                        <div class="rollDiv"><input type="button" id="techButton1" value="Roll Tech Here" class="rollStat" onclick="RollSkill(techDie.value, techResult.id)"></div>
+                        <p role="status">Tech Roll Result: <span id="techResult">Not yet rolled</span></p>
+                        <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
+                        <div>
+                            <code id="techCode">
+                                No Tech die set.
+                            </code>
+                            <input type="button" value="Copy Tech Roll20 Text" onclick="CopyToClipboard(techCode.id)">
+                        </div>
+                    </section>
+                    <section id="weaponsSection" class="skillSection">
+                        <h3 id="weaponsHeading">Weapons</h3>
+                        <select aria-label="Weapons Die Value" name="weaponsDie" id="weaponsDie" onchange="UpdateCopyText(weaponsHeading.textContent, weaponsDie.value, weaponsCode.id)">
+                            <option value="0">--Set Weapons Die Value--</option>
+                            <option value="4">d4</option>
+                            <option value="6">d6</option>
+                            <option value="8">d8</option>
+                            <option value="10">d10</option>
+                            <option value="12">d12</option>
+                            <option value="20">d20</option>
+                            <option value="100">d100</option>
+                        </select>
+                        <div class="rollDiv"><input type="button" id="weaponsButton1" value="Roll Weapons Here" class="rollStat" onclick="RollSkill(weaponsDie.value, weaponsResult.id)"></div>
+                        <p role="status">Weapons Roll Result: <span id="weaponsResult">Not yet rolled</span></p>
+                        <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
+                        <div>
+                            <code id="weaponsCode">
+                                No Weapons die set.
+                            </code>
+                            <input type="button" value="Copy Weapons Roll20 Text" onclick="CopyToClipboard(weaponsCode.id)">
+                        </div>
+                    </section>
+                    <section id="driveSection" class="skillSection">
+                        <h3 id="driveHeading">Drive</h3>
+                        <select aria-label="Drive Die Value" name="driveDie" id="driveDie" onchange="UpdateCopyText(driveHeading.textContent, driveDie.value, driveCode.id)">
+                            <option value="0">--Set Drive Die Value--</option>
+                            <option value="4">d4</option>
+                            <option value="6">d6</option>
+                            <option value="8">d8</option>
+                            <option value="10">d10</option>
+                            <option value="12">d12</option>
+                            <option value="20">d20</option>
+                            <option value="100">d100</option>
+                        </select>
+                        <div class="rollDiv"><input type="button" id="driveButton1" value="Roll Drive Here" class="rollStat" onclick="RollSkill(driveDie.value, driveResult.id)"></div>
+                        <p role="status">Drive Roll Result: <span id="driveResult">Not yet rolled</span></p>
+                        <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
+                        <div>
+                            <code id="driveCode">
+                                No Drive die set.
+                            </code>
+                            <input type="button" value="Copy Drive Roll20 Text" onclick="CopyToClipboard(driveCode.id)">
+                        </div>
+                    </section>
+                    <section id="sneakSection" class="skillSection">
+                        <h3 id="sneakHeading">Sneak</h3>
+                        <select aria-label="Sneak Die Value" name="sneakDie" id="sneakDie" onchange="UpdateCopyText(sneakHeading.textContent, sneakDie.value, sneakCode.id)">
+                            <option value="0">--Set Sneak Die Value--</option>
+                            <option value="4">d4</option>
+                            <option value="6">d6</option>
+                            <option value="8">d8</option>
+                            <option value="10">d10</option>
+                            <option value="12">d12</option>
+                            <option value="20">d20</option>
+                            <option value="100">d100</option>
+                        </select>
+                        <div class="rollDiv"><input type="button" id="sneakButton1" value="Roll Sneak Here" class="rollStat" onclick="RollSkill(sneakDie.value, sneakResult.id)"></div>
+                        <p role="status">Sneak Roll Result: <span id="sneakResult">Not yet rolled</span></p>
+                        <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
+                        <div>
+                            <code id="sneakCode">
+                                No Sneak die set.
+                            </code>
+                            <input type="button" value="Copy Sneak Roll20 Text" onclick="CopyToClipboard(sneakCode.id)">
+                        </div>
+                    </section>
+                    <section id="witsSection" class="skillSection">
+                        <h3 id="witsHeading">Wits</h3>
+                        <select aria-label="Wits Die Value" name="witsDie" id="witsDie" onchange="UpdateCopyText(witsHeading.textContent, witsDie.value, witsCode.id)">
+                            <option value="0">--Set Wits Die Value--</option>
+                            <option value="4">d4</option>
+                            <option value="6">d6</option>
+                            <option value="8">d8</option>
+                            <option value="10">d10</option>
+                            <option value="12">d12</option>
+                            <option value="20">d20</option>
+                            <option value="100">d100</option>
+                        </select>
+                        <div class="rollDiv"><input type="button" id="witsButton1" value="Roll Wits Here" class="rollStat" onclick="RollSkill(witsDie.value, witsResult.id)"></div>
+                        <p role="status">Wits Roll Result: <span id="witsResult">Not yet rolled</span></p>
+                        <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
+                        <div>
+                            <code id="witsCode">
+                                No Wits die set.
+                            </code>
+                            <input type="button" value="Copy Wits Roll20 Text" onclick="CopyToClipboard(witsCode.id)">
+                        </div>
+                    </section>
+                    <section id="hotSection" class="skillSection">
+                        <h3 id="hotHeading">Hot</h3>
+                        <select aria-label="Hot Die Value" name="hotDie" id="hotDie" onchange="UpdateCopyText(hotHeading.textContent, hotDie.value, hotCode.id)">
+                            <option value="0">--Set Hot Die Value--</option>
+                            <option value="4">d4</option>
+                            <option value="6">d6</option>
+                            <option value="8">d8</option>
+                            <option value="10">d10</option>
+                            <option value="12">d12</option>
+                            <option value="20">d20</option>
+                            <option value="100">d100</option>
+                        </select>
+                        <div class="rollDiv"><input type="button" id="hotButton1" value="Roll Hot Here" class="rollStat" onclick="RollSkill(hotDie.value, hotResult.id)"></div>
+                        <p role="status">Hot Roll Result: <span id="hotResult">Not yet rolled</span></p>
+                        <p>If you would like to roll in Roll20 instead, copy the following text block:</p>
+                        <div>
+                            <code id="hotCode">
+                                No Hot die set.
+                            </code>
+                            <input type="button" value="Copy Hot Roll20 Text" onclick="CopyToClipboard(hotCode.id)">
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div id="tabpanel-2" role="tabpanel" aria-labelledby="tab-2" class="is-hidden">
+                <div>
+                    <h2>Injuries</h2>
+                    <p>The following options are used to set the number of various injury types your character has.</p>
+                    <ul id="injuries-List">
+                        <li>
+                            <label for="superficialInjury">Superficial:</label><input type="number" id="superficialInjury" value="0" min="0" max="9999" step="1" aria-label="Superficial Injuries" title="Superficial Injuries">
+                        </li>
+                        <li>
+                            <label for="severeInjury">Severe:</label><input type="number" id="severeInjury" value="0" min="0" max="9999" step="1" aria-label="Severe Injuries" title="Severe Injuries">
+                        </li>
+                        <li>
+                            <label for="adrenlizedInjury">Adrenlized:</label><input type="number" id="adrenlizedInjury" value="0" min="0" max="9999" step="1" aria-label="Adrenlized Injuries" title="Adrenlized Injuries">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="tabpanel-3" role="tabpanel" aria-labelledby="tab-3" class="is-hidden">
+            <div>
+                <h2>Abilities</h2>
+                <p>When you initially create a character, you will pick 3 Abilities.</p>
+                <p>At the end of each session, players may use remaining Turbo Tokens to purchase extra abilities. Individual abilities cost 2 Turbo Tokens.</p>
+                <table id="ability-Table">
+                    <thead>
+                        <tr>
+                            <th>Purchased?</th>
+                            <th>Ability Name</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox" id="smokin" name="smokin" value="Purchase Smokin" aria-label="Purchase Smokin'" title="Purchase Smokin'"></td>
+                            <td>Smokin'</td>
+                            <td>Lower the DC of a Hot Check by 3 when making a first impression.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="burglar" name="burglar" value="Purchase Burglar" aria-label="Purchase Burglar" title="Purchase Burglar"></td>
+                            <td>Burglar</td>
+                            <td>Lower the DC of a Sneak Check by 3 when entering a protected location.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="connected" name="connected" value="Purchase Connected" aria-label="Purchase Connected" title="Purchase Connected"></td>
+                            <td>Connected</td>
+                            <td>Lower the DC of a Hot Check by 3 when searching for a helpful ally.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="relentless" name="relentless" value="Purchase Relentless" aria-label="Purchase Relentless" title="Purchase Relentless"></td>
+                            <td>Relentless</td>
+                            <td>Gain 2 Turbo Tokens when you fail a check.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="escape-Artist" name="escape-Artist" value="Purchase Escape Artist" aria-label="Purchase Escape Artist" title="Purchase Escape Artist"></td>
+                            <td>Escape Artist</td>
+                            <td>Lower the DC of a Sneak Check by 3 when escaping restraints or imprisonment.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="flashy" name="flashy" value="Purchase Flashy" aria-label="Purchase Flashy" title="Purchase Flashy"></td>
+                            <td>Flashy</td>
+                            <td>Lower the DC of a Hot Check by 5 if it's the first roll after you've Blown Up.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="transporter" name="transporter" value="Purchase Transporter" aria-label="Purchase Transporter" title="Purchase Transporter"></td>
+                            <td>Transporter</td>
+                            <td>Lower the DC of a Drive Check by 3 to avoid pursuers.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="inspiring" name="inspiring" value="Purchase Inspiring" aria-label="Purchase Inspiring" title="Purchase Inspiring"></td>
+                            <td>Inspiring</td>
+                            <td>Each time you succeed at a check, an ally of your choice receives 1 Turbo Token.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="loyal" name="loyal" value="Purchase Loyal" aria-label="Purchase Loyal" title="Purchase Loyal"></td>
+                            <td>Loyal</td>
+                            <td>Your Turbo Tokens give friends +1 at  a one-to-one rate.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="lucky1" name="lucky1" value="Purchase Lucky" aria-label="Purchase Lucky" title="Purchase Lucky"></td>
+                            <td>Lucky <div class="mini-text">Once Per Episode.</div></td>
+                            <td>Spend 2 Turbo Tokens to reroll any check.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="trained1" name="trained1" value="Purchase Trained" aria-label="Purchase Trained" title="Purchase Trained"></td>
+                            <td>Trained</td>
+                            <td>-1 to DCs for a Stat of your choice.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="studied1" name="studied1" value="Purchase Studied" aria-label="Purchase Studied" title="Purchase Studied"></td>
+                            <td>Studied <div class="mini-text">Replaces trained.</div></td>
+                            <td>-3 to DCs for Stat of your choice.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="mastery1" name="mastery1" value="Purchase Mastery" aria-label="Purchase Mastery" title="Purchase Mastery"></td>
+                            <td>Mastery <div class="mini-text">Replaces Studied.</div></td>
+                            <td>-5 to DCs for a Stat of your choice.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="menacing1" name="menacing1" value="Purchase Menacing" aria-label="Purchase Menacing" title="Purchase Menacing"></td>
+                            <td>Menacing</td>
+                            <td>Use Brawl instead of Hot when intimidating an NPC.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="nerves-of-steel1" name="nerves-of-steel1" value="Purchase Nerves of Steel" aria-label="Purchase Nerves of Steel" title="Purchase Nerves of Steel"></td>
+                            <td>Nerves of Steel</td>
+                            <td>Spend a Turbo Token to treat a snap decision as a Prepared Action.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="by-the-book1" name="by-the-book1" value="Purchase By the Book" aria-label="Purchase By the Book" title="Purchase By the Book"></td>
+                            <td>By the Book</td>
+                            <td>Lower the DC of a Hot Check by 3 when interacting with authority figures.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="poker-face1" name="poker-face1" value="Purchase Poker Face" aria-label="Purchase Poker Face" title="Purchase Poker Face"></td>
+                            <td>Poker Face</td>
+                            <td>When attempting to conceal the truth, use Tough instead of Hot.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="prepared1" name="prepared1" value="Purchase Prepared" aria-label="Purchase Prepared" title="Purchase Prepared"></td>
+                            <td>Prepared <div class="mini-text">GM's Discretion.</div></td>
+                            <td>Spend 2 Turbo Tokens to just happen to have one commonplace item with you.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="protector1" name="protector1" value="Purchase Protector" aria-label="Purchase Protector" title="Purchase Protector"></td>
+                            <td>Protector</td>
+                            <td>Lower the DC of a check by 3 when defending your friends.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="quick-healing1" name="quick-healing1" value="Purchase Quick Healing" aria-label="Purchase Quick Healing" title="Purchase Quick Healing"></td>
+                            <td>Quick Healing</td>
+                            <td>Recover one injury level at the end of an encounter.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="resilient1" name="resilient1" value="Purchase Resilient" aria-label="Purchase Resilient" title="Purchase Resilient"></td>
+                            <td>Resilient</td>
+                            <td>Turbo tokens are worth double when used to boost against an attack that targets you.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="skilled1" name="skilled1" value="Purchase Skilled" aria-label="Purchase Skilled" title="Purchase Skilled"></td>
+                            <td>Skilled</td>
+                            <td>Increase your die type for one skill by 1 for the purposes of halving.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="trainer1" name="trainer1" value="Purchase Trainer" aria-label="Purchase Trainer" title="Purchase Trainer"></td>
+                            <td>Trainer</td>
+                            <td>Describe a pep talk you gave earlier to spend Turbo Tokens for a friend, even when you are not present.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="stealthy1" name="stealthy1" value="Purchase Stealthy" aria-label="Purchase Stealthy" title="Purchase Stealthy"></td>
+                            <td>Stealthy</td>
+                            <td>Lower the DC of a Sneak Check by 3 when trying to avoid being seen.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="suspicious1" name="suspicious1" value="Purchase Suspicious" aria-label="Purchase Suspicious" title="Purchase Suspicious"></td>
+                            <td>Suspicious</td>
+                            <td>Lower the DC of a Wits Check by 3 when trying to determine if someone is lying to you.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="grit1" name="grit1" value="Purchase Grit" aria-label="Purchase Grit" title="Purchase Grit"></td>
+                            <td>Grit</td>
+                            <td>Lower the DC of a Tough Check by 3 when resisting a Brawl Check.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="martial-artist1" name="martial-artist1" value="Purchase Martial Artist" aria-label="Purchase Martial Artist" title="Purchase Martial Artist"></td>
+                            <td>Martial Artist</td>
+                            <td>Spend a Turbo Token to force an enemy to resist your Brawl with Wits instead of Tough.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="leap-of-faith1" name="leap-of-faith1" value="Purchase Leap of Faith" aria-label="Purchase Leap of Faith" title="Purchase Leap of Faith"></td>
+                            <td>Leap of Faith</td>
+                            <td>Lower the DC of a Stunts Check by 3 when making a jump that could injure you.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="neck-snapper1" name="neck-snapper1" value="Purchase Neck Snapper" aria-label="Purchase Neck Snapper" title="Purchase Neck Snapper"></td>
+                            <td>Neck Snapper</td>
+                            <td>Roll a Brawl Check to harmlessly incapacitate any opponent.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="hacker1" name="hacker1" value="Purchase Hacker" aria-label="Purchase Hacker" title="Purchase Hacker"></td>
+                            <td>Hacker</td>
+                            <td>Lower the DC of a Tech Check by 3 when breaking into a computer database.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="duelist1" name="duelist1" value="Purchase Duelist" aria-label="Purchase Duelist" title="Purchase Duelist"></td>
+                            <td>Duelist</td>
+                            <td>Lower the DC of a Weapons Check by 3 against someone wielding the same weapon.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="interrogator1" name="interrogator1" value="Purchase Interrogator" aria-label="Purchase Interrogator" title="Purchase Interrogator"></td>
+                            <td>Interrogator</td>
+                            <td>Lower the DC of a Wits Check by 3 to draw information out of an opponent.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="demolitions1" name="demolitions1" value="Purchase Demolitions" aria-label="Purchase Demolitions" title="Purchase Demolitions"></td>
+                            <td>Demolitions</td>
+                            <td>Lower the DC of a Tech Check by 3 when explosives are involved.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="hotwire1" name="hotwire1" value="Purchase Hotwire" aria-label="Purchase Hotwire" title="Purchase Hotwire"></td>
+                            <td>Hotwire</td>
+                            <td>When interacting with vehicles, use Drive instead of Tech.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="wild-card1" name="wild-card1" value="Purchase Wild Card" aria-label="Purchase Wild Card" title="Purchase Wild Card"></td>
+                            <td>Wild Card</td>
+                            <td>You are a Wild Card.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="trouble-maker1" name="trouble-maker1" value="Purchase Trouble Maker" aria-label="Purchase Trouble Maker" title="Purchase Trouble Maker"></td>
+                            <td>Trouble Maker <div class="mini-text">GM's Discretion.</div></td>
+                            <td>Spend a Turbo Token to locate and receive help from a criminal network.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="wealthy1" name="wealthy1" value="Purchase Wealthy" aria-label="Purchase Wealthy" title="Purchase Wealthy"></td>
+                            <td>Wealthy</td>
+                            <td>Spend a Turbo Token to ease a bad situation with cash.</td>
+                            <td><input type="button" value="Send to Chat"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            <div id="tabpanel-4" role="tabpanel" aria-labelledby="tab-4" class="is-hidden">
+                <div>
+                    <h2>Group Suites</h2>
+                    <p>New 'group suites' of abilities are unlocked for purchase once all players reach a higher die type (i.e., one d6 from every player). Abilities from group suites cost 10 turbo tokens for an individual, or 18 for the entire group.</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Purchased?</th>
+                                <th>Ability Name</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox" id="la-familia1" name="la-familia1" value="Purchase La Familia" aria-label="Purchase La Familia" title="Purchase La Familia"></td>
+                                <td>La Familia <div class="mini-text">Unlocked at d6.</div></td>
+                                <td>-</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="tough1" name="tough1" value="Purchase Tough" aria-label="Purchase Tough" title="Purchase Tough"></td>
+                                <td>Tough <div class="mini-text">Once Per Episode.</div></td>
+                                <td>Roll Tough on someone else's behalf.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="tokens1" name="tokens1" value="Purchase Tokens" aria-label="Purchase Tokens" title="Purchase Tokens"></td>
+                                <td>Tokens</td>
+                                <td>Spend tokens for other people at a 1:1 exchange rate.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="skill-die1" name="skill-die1" value="Purchase Skill Die" aria-label="Purchase Skill Die" title="Purchase Skill Die"></td>
+                                <td>Skill Die <div class="mini-text">Once Per Episode.</div></td>
+                                <td>Lend a teammate a skill die.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="criminal-conspiracy1" name="criminal-conspiracy1" value="Purchase Criminal Conspiracy" aria-label="Purchase Criminal Conspiracy" title="Purchase Criminal Conspiracy"></td>
+                                <td>Criminal Conspiracy <div class="mini-text">Unlocked at d6.</div></td>
+                                <td>-</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="item1" name="item1" value="Purchase Item" aria-label="Purchase Item" title="Purchase Item"></td>
+                                <td>Item</td>
+                                <td>When in a new location, produce a single useful item.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="tech1" name="tech1" value="Purchase Tech" aria-label="Purchase Tech" title="Purchase Tech"></td>
+                                <td>Tech <div class="mini-text">Once Per Episode.</div></td>
+                                <td>Once per episode, add your Tech Die to a Sneak die.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="hot1" name="hot1" value="Purchase Hot" aria-label="Purchase Hot" title="Purchase Hot"></td>
+                                <td>Hot</td>
+                                <td>Roll Hot in response to the first attack of an encounter to dissuade an opponent.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="diesel-circus1" name="diesel-circus1" value="Purchase Diesel Circus" aria-label="Purchase Diesel Circus" title="Purchase Diesel Circus"></td>
+                                <td>Diesel Circus <div class="mini-text">Unlocked at d8.</div></td>
+                                <td>-</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="injury-advantage1" name="injury-advantage1" value="Purchase Injury Advantage" aria-label="Purchase Injury Advantage" title="Purchase Injury Advantage"></td>
+                                <td>Injury Advantage</td>
+                                <td>Roll twice on the first roll after an injury.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="double-explosion1" name="double-explosion1" value="Purchase Double Explosion" aria-label="Purchase Double Explosion" title="Purchase Double Explosion"></td>
+                                <td>Double Explosion</td>
+                                <td>Doubles your amount of tokens.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="drive-check1" name="drive-check1" value="Purchase Drive Check" aria-label="Purchase Drive Check" title="Purchase Drive Check"></td>
+                                <td>Drive Check</td>
+                                <td>On a successful Drive Check, make another skill check.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="the-continentals1" name="the-continentals1" value="Purchase The Continentals" aria-label="Purchase The Continentals" title="Purchase The Continentals"></td>
+                                <td>The Continentals <div class="mini-text">Unlocked at d8.</div></td>
+                                <td>-</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="wits1" name="wits1" value="Purchase Wits" aria-label="Purchase Wits" title="Purchase Wits"></td>
+                                <td>Wits</td>
+                                <td>Turbo Tokens for Wits help increase the die type.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="hot-checks1" name="hot-checks1" value="Purchase Hot Checks" aria-label="Purchase Hot Checks" title="Purchase Hot Checks"></td>
+                                <td>Hot Checks</td>
+                                <td>Two successful Hot Checks auto-succeeds on stealing from an opponent.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="melee1" name="melee1" value="Purchase Melee" aria-label="Purchase Melee" title="Purchase Melee"></td>
+                                <td>Melee</td>
+                                <td>Lower the DC of a Weapons Checks using melee weapons.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="alpha-squad1" name="alpha-squad1" value="Purchase Alpha Squad" aria-label="Purchase Alpha Squad" title="Purchase Alpha Squad"></td>
+                                <td>Alpha Squad <div class="mini-text">Unlocked at d10.</div></td>
+                                <td>-</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="group-explosion1" name="group-explosion1" value="Purchase Group Explosion" aria-label="Purchase Group Explosion" title="Purchase Group Explosion"></td>
+                                <td>Group Explosion <div class="mini-text">Minimum 3 people.</div></td>
+                                <td>In a scene where everyone uses a different skill, reduce the range to BLOW UP by 1.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="skill-add1" name="skill-add1" value="Purchase Skill Add" aria-label="Purchase Skill Add" title="Purchase Skill Add"></td>
+                                <td>Skill Add <div class="mini-text">Once Per Episode.</div></td>
+                                <td>Two people roll the same skill and add the totals together.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="suit-up1" name="suit-up1" value="Purchase Suit Up" aria-label="Purchase Suit Up" title="Purchase Suit Up"></td>
+                                <td>Suit Up <div class="mini-text">Once Per Episode.</div></td>
+                                <td>The group may "suit up" and each take 2 Turbo Tokens.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="marauders1" name="marauders1" value="Purchase Marauders" aria-label="Purchase Marauders" title="Purchase Marauders"></td>
+                                <td>Marauders <div class="mini-text">Unlocked at d10.</div></td>
+                                <td>-</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="plus-ten1" name="plus-ten1" value="Purchase +10" aria-label="Purchase +10" title="Purchase +10"></td>
+                                <td>+10</td>
+                                <td>Beating an opponent by more than 10 means you defeat an additional opponent.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="destroyer1" name="destroyer1" value="Purchase Destroyer" aria-label="Purchase Destroyer" title="Purchase Destroyer"></td>
+                                <td>Destroyer</td>
+                                <td>Gain a Turbo Token on any turn where you destroy an object.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="firestarter1" name="firestarter1" value="Purchase Firestarter" aria-label="Purchase Firestarter" title="Purchase Firestarter"></td>
+                                <td>Firestarter</td>
+                                <td>Start a fire, short circuit electronics, or dissolve a structure as part of any action..</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="the-ones1" name="the-ones1" value="Purchase The Ones" aria-label="Purchase The Ones" title="Purchase The Ones"></td>
+                                <td>The Ones <div class="mini-text">Unlocked at d12.</div></td>
+                                <td>-</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="max-roll1" name="max-roll1" value="Purchase Max Roll" aria-label="Purchase Max Roll" title="Purchase Max Roll"></td>
+                                <td>Max Roll <div class="mini-text">Once Per Episode.</div></td>
+                                <td>Treat a Nat 1 as a max die roll.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="rerollA1" name="rerollA1" value="Purchase Reroll (A)" aria-label="Purchase Reroll (A)" title="Purchase Reroll (A)"></td>
+                                <td>Reroll (A) <div class="mini-text">Once Per Episode.</div></td>
+                                <td>Reroll a failure with a different skill.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="turbo-tokens1" name="turbo-tokens1" value="Purchase Turbo Tokens" aria-label="Purchase Turbo Tokens" title="Purchase Turbo Tokens"></td>
+                                <td>Turbo Tokens <div class="mini-text">Once Per Episode.</div></td>
+                                <td>Accept a Nat 1 to gain half the Turbo Tokens of the die value.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="tactical-command1" name="tactical-command1" value="Purchase Tactical Command" aria-label="Purchase Tactical Command" title="Purchase Tactical Command"></td>
+                                <td>Tactical Command <div class="mini-text">Unlocked at d12.</div></td>
+                                <td>-</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="shared-tokens1" name="shared-tokens1" value="Purchase Shared Tokens" aria-label="Purchase Shared Tokens" title="Purchase Shared Tokens"></td>
+                                <td>Shared Tokens <div class="mini-text">Once Per Episode.</div></td>
+                                <td>Spend Turbo Tokens across scenes.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="rerollB1" name="rerollB1" value="Purchase Reroll (B)" aria-label="Purchase Reroll (B)" title="Purchase Reroll (B)"></td>
+                                <td>Reroll (B) <div class="mini-text">Once Per Episode.</div></td>
+                                <td>Reroll on a failure.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="token-gain1" name="token-gain1" value="Purchase Token Gain" aria-label="Purchase Token Gain" title="Purchase Token Gain"></td>
+                                <td>Token Gain</td>
+                                <td>Characters gain a Turbo Token at the end of a scene where they have zero.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="bustin-makes-me-feel-good1" name="bustin-makes-me-feel-good1" value="Purchase Bustin' Makes Me Feel Good" aria-label="Purchase Bustin' Makes Me Feel Good" title="Purchase Bustin' Makes Me Feel Good"></td>
+                                <td>Bustin' Makes Me Feel Good <div class="mini-text">Unlocked at d20.</div></td>
+                                <td>-</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="track-restart1" name="track-restart1" value="Purchase Track Restart" aria-label="Purchase Track Restart" title="Purchase Track Restart"></td>
+                                <td>Track Restart <div class="mini-text">On a Nat 20.</div></td>
+                                <td>Restart that skill track, now rolling a second die and taking the better result.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="group-explosion1" name="group-explosion1" value="Purchase Group Explosion" aria-label="Purchase Group Explosion" title="Purchase Group Explosion"></td>
+                                <td>Group Explosion <div class="mini-text">On a Nat 20.</div></td>
+                                <td>Everybody else at the table graduates all of their lowest die type up by one.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" id="gm1" name="gm1" value="Purchase GM" aria-label="Purchase GM" title="Purchase GM"></td>
+                                <td>GM <div class="mini-text">On a Nat 20.</div></td>
+                                <td>Become the GM for 60 seconds.</td>
+                                <td><button>Send to Chat</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="tabpanel-5" role="tabpanel" aria-labelledby="tab-5" class="is-hidden">
+                <div>
+                    <h2>Settings</h2>
+                    <p>These buttons on this page currently do not work. I will be implementing them in a later version.</p>
+
+                    <h3>Save Character Info</h3>
+                    <p>This button is used to export a character's information from this web app into a JSON file.</p>
+                    <input type="button" id="exportButton" type="button" aria-label="Export Character Information" value="Export Character Information" onclick="saveCharacter();">
+
+                    <h3>Import Character Info</h3>
+                    <p>This button is used to import a character's information into this web app using a JSON file created previously.</p>
+                    <input type="button" id="importButton" type="button" aria-label="Import Character Information" value="Import Character Information" onclick="importCharacter();">
+
+                    <h3>Dark Mode Toggle</h3>
+                    <p>This button is intended to be used to toggle between light and dark mode.</p>
+                    <input type="button" id="darkModeToggle" disabled type="button" data-theme-toggle aria-label="Change to light Mode" value="Change to light Mode" onclick="toggleTheme();">
+
+                    <h3>Troubleshooting</h3>
+                    <p>Button in this section are intended to be used to fix known issues that may occur.</p>
+                    <input type="button" id="resetCopyText" type="button" aria-label="Reset Copy Text" value="Reset Copy Text" onclick="resetCopyText();">
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>Written by Brennan Lee Mulligan & Carlos Luna.<br>Design & Layout by Ruby Lavin.<br>With special thanks to The Intrepid Heroes & Hunters Entertainment.</p>
+        </footer>
+        <script src="scripts/tabs.js"></script>
+        <script src="scripts/skills.js"></script>
+        <script src="scripts/characterActions.js"></script>
+        <script src="scripts/cookies.js"></script>
+    </body>
+</html>
